@@ -253,25 +253,57 @@ start knowledge_graph.html
 
 ---
 
-### 4. No-API-Key LLM Mode (`llm_bridge.py`)
+### 4. LLM-Assisted Triplet Extraction Options
 
-If you want to use an LLM (like ChatGPT, Claude, or Gemini) to extract triplets but **do not have a paid API key**:
+This repository includes **two specialized scripts** for using LLMs to extract knowledge graph triplets:
 
-#### A. Generate and View the Formatted LLM Prompt
-```bash
-python llm_bridge.py --print-prompt-only
-```
+| Script | Key Capabilities | Best Used When... |
+| :--- | :--- | :--- |
+| [**`llm_bridge.py`**](llm_bridge.py) *(Enhanced)* | • Local inference via **Ollama** (`--ollama`)<br>• Local inference via **LM Studio** (`--lmstudio`)<br>• Direct `.gguf` / MLX model loading (`--local-path`)<br>• Cloud APIs (OpenAI, Gemini, Anthropic)<br>• Interactive copy-paste fallback | You want automated local extraction using your local GPU (e.g. Llama 3.2 on M1 Mac) or cloud APIs. |
+| [**`llm_bridge_copypaste.py`**](llm_bridge_copypaste.py) *(Original)* | • Pure prompt generator & terminal JSON parser<br>• Zero local model installation required<br>• Works with any free browser chat window | You don't have local LLM software installed and just want to copy/paste into ChatGPT, Claude, or Gemini. |
 
-#### B. Run the Interactive Copy-Paste Workflow
-```bash
-python llm_bridge.py
-```
-1. It prints the exact prompt for you to copy.
-2. Paste it into **ChatGPT**, **Claude**, or **Gemini** web chat.
-3. Copy the LLM's JSON response, paste it back into your terminal, and type `END`.
-4. The script automatically validates the JSON, updates `triplets.json`, and updates `knowledge_graph.ttl`!
+---
 
-*(To preview realistic sample output formats, see [**`output.md`**](output.md)).*
+#### A. Using `llm_bridge.py` (Local Models & Automated Inference)
+
+1. **Run with your local Ollama model (e.g. Llama 3.2 on M1 Mac)**:
+   ```bash
+   python llm_bridge.py --ollama --model llama3.2-local
+   ```
+
+2. **Run with LM Studio local server**:
+   Start the local server in LM Studio on port 1234, then run:
+   ```bash
+   python llm_bridge.py --lmstudio
+   ```
+
+3. **Run directly from a local `.gguf` file**:
+   ```bash
+   python llm_bridge.py --local-path "/path/to/your/model.gguf"
+   ```
+
+4. **Run in interactive copy-paste mode (fallback)**:
+   ```bash
+   python llm_bridge.py
+   ```
+
+---
+
+#### B. Using `llm_bridge_copypaste.py` (Lightweight Browser Copy-Paste)
+
+This script is 100% lightweight and requires zero local LLM tools:
+
+1. **Start the script**:
+   ```bash
+   python llm_bridge_copypaste.py
+   ```
+2. **Copy** the prompt printed in your terminal.
+3. **Paste** it into [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com).
+4. **Copy** the JSON response from your browser, paste it back into the terminal, and type `END`.
+5. The script validates the JSON and updates `triplets.json` and `knowledge_graph.ttl` automatically!
+
+*(To preview sample output formats for both tools, see [**`output.md`**](output.md)).*
+
 
 ---
 
@@ -285,8 +317,10 @@ KG_Ex/
 ├── requirements.txt               # Project dependencies (spacy, rdflib, networkx, matplotlib)
 ├── sample_text.txt                # Educational input text corpus
 ├── sample_questions.txt           # Tailored practice questions for testing
-├── llm_bridge.py                  # LLM extractor with No-API-Key copy-paste workflow
+├── llm_bridge.py                  # Local LLM extractor (Ollama, LM Studio, GGUF, APIs)
+├── llm_bridge_copypaste.py        # Lightweight manual copy-paste extractor for web chats
 │
+
 ├── 01_basic_kg/                   # ========================================================
 │   ├── README.md                  # Detailed learner guide for Version 1
 │   ├── extractor.py               # NLP Dependency Parsing (SPO Triplet Extraction)

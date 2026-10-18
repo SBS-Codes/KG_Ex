@@ -6,21 +6,9 @@
     "sentence": "Alan Turing designed the ACE computer in 1945."
   },
   {
-    "subject": "Alan Turing",
-    "predicate": "designed in",
-    "object": "1945",
-    "sentence": "Alan Turing designed the ACE computer in 1945."
-  },
-  {
     "subject": "Steve Jobs",
     "predicate": "co-founded",
     "object": "Apple",
-    "sentence": "Steve Jobs co-founded Apple with Steve Wozniak."
-  },
-  {
-    "subject": "Steve Jobs",
-    "predicate": "co-founded with",
-    "object": "Steve Wozniak",
     "sentence": "Steve Jobs co-founded Apple with Steve Wozniak."
   },
   {
@@ -30,45 +18,21 @@
     "sentence": "Apple released the iPhone in 2007."
   },
   {
-    "subject": "Apple",
-    "predicate": "released in",
-    "object": "2007",
-    "sentence": "Apple released the iPhone in 2007."
-  },
-  {
     "subject": "Google",
     "predicate": "developed",
     "object": "TensorFlow",
     "sentence": "Google developed TensorFlow for machine learning."
   },
   {
-    "subject": "Google",
-    "predicate": "developed for",
-    "object": "machine learning",
-    "sentence": "Google developed TensorFlow for machine learning."
-  },
-  {
     "subject": "Python",
-    "predicate": "was created by",
-    "object": "Guido van Rossum",
-    "sentence": "Python was created by Guido van Rossum in 1991."
-  },
-  {
-    "subject": "Python",
-    "predicate": "was created in",
-    "object": "1991",
+    "predicate": "was created",
+    "object": "by Guido van Rossum",
     "sentence": "Python was created by Guido van Rossum in 1991."
   },
   {
     "subject": "Marie Curie",
     "predicate": "discovered",
-    "object": "radium",
-    "sentence": "Marie Curie discovered radium and polonium."
-  },
-  {
-    "subject": "Marie Curie",
-    "predicate": "discovered",
-    "object": "polonium",
+    "object": "radium and polonium",
     "sentence": "Marie Curie discovered radium and polonium."
   },
   {
@@ -81,12 +45,6 @@
     "subject": "Marie Curie",
     "predicate": "won",
     "object": "the Nobel Prize in Chemistry",
-    "sentence": "Marie Curie won the Nobel Prize in Chemistry in 1911."
-  },
-  {
-    "subject": "Marie Curie",
-    "predicate": "won in",
-    "object": "1911",
     "sentence": "Marie Curie won the Nobel Prize in Chemistry in 1911."
   },
   {
