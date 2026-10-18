@@ -1,0 +1,67 @@
+# Sample Questions Tailored to sample_text.txt
+# -------------------------------------------------------------
+# These questions can be asked to the Conversational Agent
+# (python 01_basic_kg/conversational_agent.py) to test the Knowledge Graph.
+
+===============================================================
+Category 1: Awards & Discoveries (Marie Curie)
+===============================================================
+1. Who won the nobel prize for chemistry?
+   Expected: Marie Curie won the Nobel Prize in Chemistry in 1911.
+
+2. Who won the nobel prize in physics?
+   Expected: Marie Curie won the Nobel Prize in Physics in 1911.
+
+3. What did Marie Curie discover?
+   Expected: Marie Curie discovered polonium and radium.
+
+===============================================================
+Category 2: Computing & Programming (Python & Alan Turing)
+===============================================================
+4. Who created Python?
+   Expected: Python was created by Guido van Rossum.
+
+5. When was Python created?
+   Expected: Python was created in 1991.
+
+6. Who designed the ACE computer?
+   Expected: ACE computer was designed by Alan Turing in 1945.
+
+7. When was the ACE computer designed?
+   Expected: ACE computer was designed in 1945.
+
+===============================================================
+Category 3: Companies & Tech Products (Apple & Google)
+===============================================================
+8. Who co-founded Apple?
+   Expected: Apple was co-founded by Steve Jobs with Steve Wozniak.
+
+9. What did Apple release?
+   Expected: Apple released iPhone in 2007.
+
+10. When was the iPhone released?
+    Expected: iPhone was released in 2007.
+
+11. What did Google develop?
+    Expected: Google developed TensorFlow for machine learning.
+
+===============================================================
+Category 4: Science & Physics (Albert Einstein)
+===============================================================
+12. What did Albert Einstein publish?
+    Expected: Albert Einstein published theory of general relativity.
+
+13. Who published the theory of general relativity?
+    Expected: theory of general relativity was published by Albert Einstein.
+
+===============================================================
+Category 5: Entity Overviews & Explorations
+===============================================================
+14. Tell me about Apple
+    Expected: Summary of all relations connected to Apple.
+
+15. Tell me about Marie Curie
+    Expected: Summary of all relations connected to Marie Curie.
+
+16. What topics do you know about?
+    Expected: List of all indexed entities in the Knowledge Graph.

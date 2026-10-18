@@ -1,0 +1,9 @@
+Alan Turing designed the ACE computer in 1945.
+Steve Jobs co-founded Apple with Steve Wozniak.
+Apple released the iPhone in 2007.
+Google developed TensorFlow for machine learning.
+Python was created by Guido van Rossum in 1991.
+Marie Curie discovered radium and polonium.
+Marie Curie won the Nobel Prize in Physics.
+Marie Curie won the Nobel Prize in Chemistry in 1911.
+Albert Einstein published the theory of general relativity.

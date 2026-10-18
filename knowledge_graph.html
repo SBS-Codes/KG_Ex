@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Knowledge Graph - Triplet Visualization</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8fafc;
+      color: #0f172a;
+      overflow: hidden;
+    }
+    header {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      height: 64px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge {
+      background: #3b82f6;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .badge-green {
+      background: #10b981;
+    }
+    #search-input {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: white;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    #search-input::placeholder {
+      color: #64748b;
+    }
+    #main-container {
+      display: flex;
+      height: calc(100vh - 64px);
+    }
+    #network-container {
+      flex: 1;
+      height: 100%;
+      background: #ffffff;
+    }
+    #sidebar {
+      width: 320px;
+      background: #f1f5f9;
+      border-left: 1px solid #e2e8f0;
+      padding: 18px;
+      overflow-y: auto;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    .triplet-item {
+      font-size: 0.85rem;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .triplet-item:last-child {
+      border-bottom: none;
+    }
+    .tag-subj { color: #2563eb; font-weight: 600; }
+    .tag-pred { color: #d97706; font-style: italic; }
+    .tag-obj { color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Knowledge Graph Triplet Explorer</h1>
+      <div class="subtitle">Interactive Subject-Predicate-Object network visualization</div>
+    </div>
+    <div class="controls">
+      <input type="text" id="search-input" placeholder="Search entity..." oninput="handleSearch(this.value)">
+      <span class="badge">16 Triplets</span>
+      <span class="badge badge-green">22 Entities</span>
+    </div>
+  </header>
+  
+  <div id="main-container">
+    <div id="network-container"></div>
+    <div id="sidebar">
+      <div class="card">
+        <div class="card-title">How to Interact</div>
+        <p style="font-size: 0.85rem; line-height: 1.4; margin: 0; color: #475569;">
+          • <b>Drag</b> nodes to explore connections.<br>
+          • <b>Scroll</b> to zoom in and out.<br>
+          • <b>Click</b> any node or edge to inspect context.<br>
+          • <b>Search</b> in the top bar to focus an entity.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">Selected Details</div>
+        <div id="details-view" style="font-size: 0.85rem; color: #64748b;">
+          Click on a node or edge to see extracted context.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const rawTriplets = [{"subject": "Alan Turing", "predicate": "designed", "object": "the ACE computer", "sentence": "Alan Turing designed the ACE computer in 1945."}, {"subject": "Alan Turing", "predicate": "designed in", "object": "1945", "sentence": "Alan Turing designed the ACE computer in 1945."}, {"subject": "Steve Jobs", "predicate": "co-founded", "object": "Apple", "sentence": "Steve Jobs co-founded Apple with Steve Wozniak."}, {"subject": "Steve Jobs", "predicate": "co-founded with", "object": "Steve Wozniak", "sentence": "Steve Jobs co-founded Apple with Steve Wozniak."}, {"subject": "Apple", "predicate": "released", "object": "the iPhone", "sentence": "Apple released the iPhone in 2007."}, {"subject": "Apple", "predicate": "released in", "object": "2007", "sentence": "Apple released the iPhone in 2007."}, {"subject": "Google", "predicate": "developed", "object": "TensorFlow", "sentence": "Google developed TensorFlow for machine learning."}, {"subject": "Google", "predicate": "developed for", "object": "machine learning", "sentence": "Google developed TensorFlow for machine learning."}, {"subject": "Python", "predicate": "was created by", "object": "Guido van Rossum", "sentence": "Python was created by Guido van Rossum in 1991."}, {"subject": "Python", "predicate": "was created in", "object": "1991", "sentence": "Python was created by Guido van Rossum in 1991."}, {"subject": "Marie Curie", "predicate": "discovered", "object": "radium", "sentence": "Marie Curie discovered radium and polonium."}, {"subject": "Marie Curie", "predicate": "discovered", "object": "polonium", "sentence": "Marie Curie discovered radium and polonium."}, {"subject": "Marie Curie", "predicate": "won", "object": "the Nobel Prize in Physics", "sentence": "Marie Curie won the Nobel Prize in Physics."}, {"subject": "Marie Curie", "predicate": "won", "object": "the Nobel Prize in Chemistry", "sentence": "Marie Curie won the Nobel Prize in Chemistry in 1911."}, {"subject": "Marie Curie", "predicate": "won in", "object": "1911", "sentence": "Marie Curie won the Nobel Prize in Chemistry in 1911."}, {"subject": "Albert Einstein", "predicate": "published", "object": "the theory of general relativity", "sentence": "Albert Einstein published the theory of general relativity."}];
+    const nodes = new vis.DataSet([{"id": "1911", "label": "1911"}, {"id": "1945", "label": "1945"}, {"id": "1991", "label": "1991"}, {"id": "2007", "label": "2007"}, {"id": "Alan Turing", "label": "Alan Turing"}, {"id": "Albert Einstein", "label": "Albert Einstein"}, {"id": "Apple", "label": "Apple"}, {"id": "Google", "label": "Google"}, {"id": "Guido van Rossum", "label": "Guido van Rossum"}, {"id": "Marie Curie", "label": "Marie Curie"}, {"id": "Python", "label": "Python"}, {"id": "Steve Jobs", "label": "Steve Jobs"}, {"id": "Steve Wozniak", "label": "Steve Wozniak"}, {"id": "TensorFlow", "label": "TensorFlow"}, {"id": "machine learning", "label": "machine learning"}, {"id": "polonium", "label": "polonium"}, {"id": "radium", "label": "radium"}, {"id": "the ACE computer", "label": "the ACE computer"}, {"id": "the Nobel Prize in Chemistry", "label": "the Nobel Prize in Chemistry"}, {"id": "the Nobel Prize in Physics", "label": "the Nobel Prize in Physics"}, {"id": "the iPhone", "label": "the iPhone"}, {"id": "the theory of general relativity", "label": "the theory of general relativity"}]);
+    const edges = new vis.DataSet([{"id": "e0", "from": "Alan Turing", "to": "the ACE computer", "label": "designed", "title": "<b>Relation:</b> designed<br><b>Context:</b> <i>Alan Turing designed the ACE computer in 1945.</i>", "arrows": "to"}, {"id": "e1", "from": "Alan Turing", "to": "1945", "label": "designed in", "title": "<b>Relation:</b> designed in<br><b>Context:</b> <i>Alan Turing designed the ACE computer in 1945.</i>", "arrows": "to"}, {"id": "e2", "from": "Steve Jobs", "to": "Apple", "label": "co-founded", "title": "<b>Relation:</b> co-founded<br><b>Context:</b> <i>Steve Jobs co-founded Apple with Steve Wozniak.</i>", "arrows": "to"}, {"id": "e3", "from": "Steve Jobs", "to": "Steve Wozniak", "label": "co-founded with", "title": "<b>Relation:</b> co-founded with<br><b>Context:</b> <i>Steve Jobs co-founded Apple with Steve Wozniak.</i>", "arrows": "to"}, {"id": "e4", "from": "Apple", "to": "the iPhone", "label": "released", "title": "<b>Relation:</b> released<br><b>Context:</b> <i>Apple released the iPhone in 2007.</i>", "arrows": "to"}, {"id": "e5", "from": "Apple", "to": "2007", "label": "released in", "title": "<b>Relation:</b> released in<br><b>Context:</b> <i>Apple released the iPhone in 2007.</i>", "arrows": "to"}, {"id": "e6", "from": "Google", "to": "TensorFlow", "label": "developed", "title": "<b>Relation:</b> developed<br><b>Context:</b> <i>Google developed TensorFlow for machine learning.</i>", "arrows": "to"}, {"id": "e7", "from": "Google", "to": "machine learning", "label": "developed for", "title": "<b>Relation:</b> developed for<br><b>Context:</b> <i>Google developed TensorFlow for machine learning.</i>", "arrows": "to"}, {"id": "e8", "from": "Python", "to": "Guido van Rossum", "label": "was created by", "title": "<b>Relation:</b> was created by<br><b>Context:</b> <i>Python was created by Guido van Rossum in 1991.</i>", "arrows": "to"}, {"id": "e9", "from": "Python", "to": "1991", "label": "was created in", "title": "<b>Relation:</b> was created in<br><b>Context:</b> <i>Python was created by Guido van Rossum in 1991.</i>", "arrows": "to"}, {"id": "e10", "from": "Marie Curie", "to": "radium", "label": "discovered", "title": "<b>Relation:</b> discovered<br><b>Context:</b> <i>Marie Curie discovered radium and polonium.</i>", "arrows": "to"}, {"id": "e11", "from": "Marie Curie", "to": "polonium", "label": "discovered", "title": "<b>Relation:</b> discovered<br><b>Context:</b> <i>Marie Curie discovered radium and polonium.</i>", "arrows": "to"}, {"id": "e12", "from": "Marie Curie", "to": "the Nobel Prize in Physics", "label": "won", "title": "<b>Relation:</b> won<br><b>Context:</b> <i>Marie Curie won the Nobel Prize in Physics.</i>", "arrows": "to"}, {"id": "e13", "from": "Marie Curie", "to": "the Nobel Prize in Chemistry", "label": "won", "title": "<b>Relation:</b> won<br><b>Context:</b> <i>Marie Curie won the Nobel Prize in Chemistry in 1911.</i>", "arrows": "to"}, {"id": "e14", "from": "Marie Curie", "to": "1911", "label": "won in", "title": "<b>Relation:</b> won in<br><b>Context:</b> <i>Marie Curie won the Nobel Prize in Chemistry in 1911.</i>", "arrows": "to"}, {"id": "e15", "from": "Albert Einstein", "to": "the theory of general relativity", "label": "published", "title": "<b>Relation:</b> published<br><b>Context:</b> <i>Albert Einstein published the theory of general relativity.</i>", "arrows": "to"}]);
+
+    const container = document.getElementById('network-container');
+    const data = { nodes: nodes, edges: edges };
+    const options = {
+      nodes: {
+        shape: 'box',
+        margin: 10,
+        font: { size: 14, color: '#0f172a', face: 'system-ui' },
+        color: {
+          border: '#3b82f6',
+          background: '#eff6ff',
+          highlight: { border: '#1d4ed8', background: '#dbeafe' }
+        },
+        shadow: { enabled: true, color: 'rgba(0,0,0,0.06)', size: 6, x: 2, y: 3 }
+      },
+      edges: {
+        font: { size: 12, color: '#c2410c', strokeWidth: 3, strokeColor: '#ffffff', align: 'top' },
+        color: { color: '#94a3b8', highlight: '#2563eb' },
+        arrows: { to: { enabled: true, scaleFactor: 0.85 } },
+        smooth: { type: 'cubicBezier', forceDirection: 'none', roundness: 0.18 }
+      },
+      physics: {
+        solver: 'forceAtlas2Based',
+        forceAtlas2Based: {
+          gravitationalConstant: -80,
+          centralGravity: 0.015,
+          springLength: 150,
+          springConstant: 0.08,
+          damping: 0.4
+        },
+        stabilization: { iterations: 200 }
+      },
+      interaction: { hover: true, tooltipDelay: 100 }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    // Click handler for details view
+    network.on('click', function(params) {
+      const detailsView = document.getElementById('details-view');
+      if (params.nodes.length > 0) {
+        const nodeId = params.nodes[0];
+        const related = rawTriplets.filter(t => t.subject === nodeId || t.object === nodeId);
+        let html = `<b>Entity:</b> <span class="tag-subj">${nodeId}</span><br><br><b>Connected Triplets:</b><br>`;
+        related.forEach(t => {
+          html += `<div class="triplet-item">
+            <span class="tag-subj">${t.subject}</span> 
+            <span class="tag-pred">--[${t.predicate}]--></span> 
+            <span class="tag-obj">${t.object}</span>
+          </div>`;
+        });
+        detailsView.innerHTML = html;
+      } else if (params.edges.length > 0) {
+        const edgeId = params.edges[0];
+        const edgeObj = edges.get(edgeId);
+        const match = rawTriplets.find(t => t.subject === edgeObj.from && t.object === edgeObj.to && t.predicate === edgeObj.label);
+        if (match) {
+          detailsView.innerHTML = `
+            <b>Triplet:</b><br>
+            <span class="tag-subj">${match.subject}</span> 
+            <span class="tag-pred">--[${match.predicate}]--></span> 
+            <span class="tag-obj">${match.object}</span><br><br>
+            <b>Original Sentence:</b><br>
+            <i>"${match.sentence}"</i>
+          `;
+        }
+      }
+    });
+
+    function handleSearch(term) {
+      if (!term.trim()) return;
+      const found = nodes.get({
+        filter: function(item) {
+          return item.label.toLowerCase().includes(term.toLowerCase());
+        }
+      });
+      if (found.length > 0) {
+        network.focus(found[0].id, { scale: 1.2, animation: true });
+      }
+    }
+  </script>
+</body>
+</html>

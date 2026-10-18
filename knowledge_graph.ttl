@@ -1,0 +1,56 @@
+@prefix ex: <http://example.org/kg/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Alan_Turing rdfs:label "Alan Turing" ;
+    ex:designed ex:ACE_computer ;
+    ex:designedIn "1945"^^xsd:gYear .
+
+ex:Albert_Einstein rdfs:label "Albert Einstein" ;
+    ex:published ex:theory_of_general_relativity .
+
+ex:Google rdfs:label "Google" ;
+    ex:developed ex:TensorFlow ;
+    ex:developedFor ex:machine_learning .
+
+ex:Marie_Curie rdfs:label "Marie Curie" ;
+    ex:discovered ex:polonium,
+        ex:radium ;
+    ex:won ex:Nobel_Prize_in_Chemistry,
+        ex:Nobel_Prize_in_Physics ;
+    ex:wonIn "1911"^^xsd:gYear .
+
+ex:Python rdfs:label "Python" ;
+    ex:wasCreatedBy ex:Guido_van_Rossum ;
+    ex:wasCreatedIn "1991"^^xsd:gYear .
+
+ex:Steve_Jobs rdfs:label "Steve Jobs" ;
+    ex:coFounded ex:Apple ;
+    ex:coFoundedWith ex:Steve_Wozniak .
+
+ex:ACE_computer rdfs:label "ACE computer" .
+
+ex:Apple rdfs:label "Apple" ;
+    ex:released ex:iPhone ;
+    ex:releasedIn "2007"^^xsd:gYear .
+
+ex:Guido_van_Rossum rdfs:label "Guido van Rossum" .
+
+ex:Nobel_Prize_in_Chemistry rdfs:label "Nobel Prize in Chemistry" .
+
+ex:Nobel_Prize_in_Physics rdfs:label "Nobel Prize in Physics" .
+
+ex:Steve_Wozniak rdfs:label "Steve Wozniak" .
+
+ex:TensorFlow rdfs:label "TensorFlow" .
+
+ex:iPhone rdfs:label "iPhone" .
+
+ex:machine_learning rdfs:label "machine learning" .
+
+ex:polonium rdfs:label "polonium" .
+
+ex:radium rdfs:label "radium" .
+
+ex:theory_of_general_relativity rdfs:label "theory of general relativity" .
+

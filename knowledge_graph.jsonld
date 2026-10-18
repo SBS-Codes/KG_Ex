@@ -1,0 +1,220 @@
+[
+  {
+    "@id": "http://example.org/kg/Marie_Curie",
+    "http://example.org/kg/discovered": [
+      {
+        "@id": "http://example.org/kg/radium"
+      },
+      {
+        "@id": "http://example.org/kg/polonium"
+      }
+    ],
+    "http://example.org/kg/won": [
+      {
+        "@id": "http://example.org/kg/Nobel_Prize_in_Physics"
+      },
+      {
+        "@id": "http://example.org/kg/Nobel_Prize_in_Chemistry"
+      }
+    ],
+    "http://example.org/kg/wonIn": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#gYear",
+        "@value": "1911"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Marie Curie"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Nobel_Prize_in_Chemistry",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Nobel Prize in Chemistry"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/TensorFlow",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "TensorFlow"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/machine_learning",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "machine learning"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Google",
+    "http://example.org/kg/developed": [
+      {
+        "@id": "http://example.org/kg/TensorFlow"
+      }
+    ],
+    "http://example.org/kg/developedFor": [
+      {
+        "@id": "http://example.org/kg/machine_learning"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Google"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/iPhone",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "iPhone"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/theory_of_general_relativity",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "theory of general relativity"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Guido_van_Rossum",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Guido van Rossum"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Albert_Einstein",
+    "http://example.org/kg/published": [
+      {
+        "@id": "http://example.org/kg/theory_of_general_relativity"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Albert Einstein"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Apple",
+    "http://example.org/kg/released": [
+      {
+        "@id": "http://example.org/kg/iPhone"
+      }
+    ],
+    "http://example.org/kg/releasedIn": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#gYear",
+        "@value": "2008"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Apple"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Steve_Wozniak",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Steve Wozniak"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Python",
+    "http://example.org/kg/wasCreatedBy": [
+      {
+        "@id": "http://example.org/kg/Guido_van_Rossum"
+      }
+    ],
+    "http://example.org/kg/wasCreatedIn": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#gYear",
+        "@value": "1991"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Python"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/ACE_computer",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "ACE computer"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Nobel_Prize_in_Physics",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Nobel Prize in Physics"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/polonium",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "polonium"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Steve_Jobs",
+    "http://example.org/kg/coFounded": [
+      {
+        "@id": "http://example.org/kg/Apple"
+      }
+    ],
+    "http://example.org/kg/coFoundedWith": [
+      {
+        "@id": "http://example.org/kg/Steve_Wozniak"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Steve Jobs"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/Alan_Turing",
+    "http://example.org/kg/designed": [
+      {
+        "@id": "http://example.org/kg/ACE_computer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Alan Turing"
+      }
+    ]
+  },
+  {
+    "@id": "http://example.org/kg/radium",
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "radium"
+      }
+    ]
+  }
+]
